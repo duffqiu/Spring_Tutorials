@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+
+	
+	<bean id="jmsFactory"
+		class="org.apache.activemq.ActiveMQConnectionFactory">
+	<property name="brokerURL" value="tcp://localhost:61616"></property>
+	</bean>
+	<bean id="jmsTemplate"
+		class="org.springframework.jms.core.JmsTemplate">
+	<property name="defaultDestinationName" value="mail.queue"></property>
+	<property name="messageConverter" ref="mailMessageConvert"></property>
+	<property name="connectionFactory" ref="jmsFactory"></property>
+	<property name="receiveTimeout" value="10000"></property>
+	<property name="deliveryPersistent" value="true"></property>
+	</bean>
+	<bean id="backOffice"
+		class="com.bhbz.spring.receiver.BackOfficeImpl">
+	<property name="connectionFactory" ref="jmsFactory"></property>
+	<property name="jmsTemplate" ref="jmsTemplate"></property>
+	</bean>
+	<bean id="frontDesk" class="com.bhbz.spring.sender.FrontDeskImpl">
+		<property name="connectionFactory" ref="jmsFactory"></property>
+		<property name="jmsTemplate" ref="jmsTemplate"></property>
+	</bean>
+	<bean id="mailMessageConvert"
+		class="com.bhbz.spring.common.MailMessageConverter">
+	</bean>
+	<tx:annotation-driven />
+	
+	<bean id="transactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="jmsFactory"></property>
+	</bean>
+	
+	<bean id="backOfficeListener"
+		class="com.bhbz.spring.listener.BackOfficeListener">
+	</bean>
+</beans>
