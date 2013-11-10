@@ -4,7 +4,6 @@
 package com.bhbz.spring.receiver;
 
 import org.springframework.jms.core.support.JmsGatewaySupport;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bhbz.spring.common.BackOffice;
 import com.bhbz.spring.common.Mail;
@@ -20,7 +19,7 @@ public class BackOfficeImpl extends JmsGatewaySupport implements BackOffice {
      * @see com.bhbz.spring.common.BackOffice#receiveMail(com.bhbz.spring.common.Mail)
      */
     @Override
-    @Transactional
+    //    @Transactional
     public Mail receiveMail() {
 	return (Mail) this.getJmsTemplate().receiveAndConvert();
 

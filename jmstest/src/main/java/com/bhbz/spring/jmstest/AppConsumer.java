@@ -27,9 +27,17 @@ public class AppConsumer {
 
 	BackOffice backOffice = (BackOffice) context.getBean("backOffice");
 
-	Mail mail = backOffice.receiveMail();
-	System.out.println("Receive: " + mail);
+	System.out.println("Start to get mail...");
+	long start = System.currentTimeMillis();
+	for (int i = 0; i < 10000; i++) {
+	    Mail mail = backOffice.receiveMail();
+	    //	    System.out.println("Receive " + i + ": " + mail);
+	    if (mail == null) {
+		break;
+	    }
+	}
+	long duration = System.currentTimeMillis() - start;
+	System.out.println(duration);
 
     }
-
 }

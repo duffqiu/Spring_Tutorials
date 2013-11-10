@@ -22,7 +22,16 @@ public class AppProducer {
 
 	FrontDesk frontDesk = (FrontDesk) context.getBean("frontDesk");
 
-	frontDesk.sendMessage(new Mail("mailid:Xx", "China", 1000.5));
+	System.out.println("start to create mail...");
+	long start = System.currentTimeMillis();
+	for (int i = 0; i < 10000; i++) {
+	    frontDesk.sendMessage(new Mail("mailid:Xx", "China", 1000.5));
+	}
+
+	long duration = System.currentTimeMillis() - start;
+	System.out.println(duration);
+
+	return;
 
     }
 }

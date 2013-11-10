@@ -32,7 +32,7 @@ public class MailMessageConverter implements MessageConverter {
 	    message.setString("mailId", mail.getMailId());
 	    message.setString("country", mail.getCountry());
 	    message.setDouble("weight", mail.getWeight());
-	    System.out.println("Get a message need to put in queue: " + mail);
+	    //	    System.out.println("Get a message need to put in queue: " + mail);
 	    return message;
 	}
 
@@ -53,7 +53,7 @@ public class MailMessageConverter implements MessageConverter {
 	    Mail mail = new Mail(mapMessage.getString("mailId"),
 		    mapMessage.getString("country"),
 		    mapMessage.getDouble("weight"));
-	    System.out.println("Get a message from queue: " + mail);
+	    //	    System.out.println("Get a message from queue: " + mail);
 	    return mail;
 	}
 
