@@ -3,4 +3,26 @@
   <groupId>com.bhbz.spring</groupId>
   <artifactId>jmstest</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-jms</artifactId>
+  		<version>3.2.4.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.activemq</groupId>
+  		<artifactId>activemq-all</artifactId>
+  		<version>5.8.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.activemq</groupId>
+  		<artifactId>activemq-pool</artifactId>
+  		<version>5.8.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.activemq</groupId>
+  		<artifactId>activemq-camel</artifactId>
+  		<version>5.8.0</version>
+  	</dependency>
+  </dependencies>
 </project>

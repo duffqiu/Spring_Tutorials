@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+
+	
+	<bean id="jmsFactory"
+		class="org.apache.activemq.ActiveMQConnectionFactory">
+	<property name="brokerURL" value="tcp://localhost:61616"></property>
+	<property name="maxThreadPoolSize" value="20"></property>
+	<property name="useAsyncSend" value="true"></property>
+	<property name="dispatchAsync" value="true"></property>
+	
+	</bean>
+	<bean id="jmsTemplate"
+		class="org.springframework.jms.core.JmsTemplate"
+		>
+	<property name="defaultDestinationName" value="mail.queue"></property>
+	<property name="messageConverter" ref="mailMessageConvert"></property>
+	<property name="connectionFactory" ref="pooledConnectionFactory"></property>
+	<property name="receiveTimeout" value="10000"></property>
+	<property name="deliveryMode" value="1"></property><!--1 non-persistent, 2 persistent  -->
+	<property name="explicitQosEnabled" value="true"></property>
+	
+	</bean>
+	<bean id="backOffice"
+		class="com.bhbz.spring.receiver.BackOfficeImpl" >
+	<property name="connectionFactory" ref="pooledConnectionFactory"></property>
+	<property name="jmsTemplate" ref="jmsTemplate"></property>
+	</bean>
+	<bean id="frontDesk" class="com.bhbz.spring.sender.FrontDeskImpl">
+		<property name="connectionFactory" ref="pooledConnectionFactory"></property>
+		<property name="jmsTemplate" ref="jmsTemplate"></property>
+	</bean>
+	<bean id="mailMessageConvert"
+		class="com.bhbz.spring.common.MailMessageConverter">
+	</bean>
+	<tx:annotation-driven />
+	
+	<bean id="transactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="pooledConnectionFactory"></property>
+	</bean>
+	
+
+	<bean id="pooledConnectionFactory"
+		class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop" init-method="start">
+	<property name="connectionFactory" ref="jmsFactory"></property>
+	<property name="maxConnections" value="20"></property>
+	<property name="maximumActiveSessionPerConnection" value="200"></property>
+	<property name="createConnectionOnStartup" value="true"></property>
+	<property name="timeBetweenExpirationCheckMillis" value="10000"></property>
+	
+	</bean>
+	
+<!-- 	<bean id="pooledConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory"
+		destroy-method="destroy">
+	<property name="targetConnectionFactory" ref="jmsFactory"></property>
+	<property name="sessionCacheSize" value="200"></property>
+	</bean>	 -->
+	
+</beans>
