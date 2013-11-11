@@ -13,6 +13,7 @@
 	<property name="maxThreadPoolSize" value="20"></property>
 	<property name="useAsyncSend" value="true"></property>
 	<property name="dispatchAsync" value="true"></property>
+
 	</bean>
 
 	<bean id="mailMessageConvert"
@@ -36,20 +37,20 @@
 		method="displayMail" />
 	</jms:listener-container>
 	
-	<bean id="pooledConnectionFactory"
+<!-- 	<bean id="pooledConnectionFactory"
 		class="org.springframework.jms.connection.CachingConnectionFactory"
 		destroy-method="destroy">
 	<property name="targetConnectionFactory" ref="jmsFactory"></property>
 	<property name="sessionCacheSize" value="200"></property>
-	</bean>
+	</bean> -->
 	
 	
-<!-- 	<bean id="pooledConnectionFactory"
+	<bean id="pooledConnectionFactory"
 		class="org.apache.activemq.pool.PooledConnectionFactory"
 		destroy-method="stop" init-method="start">
 	<property name="connectionFactory" ref="jmsFactory"></property>
 	<property name="maxConnections" value="20"></property>
 	<property name="maximumActiveSessionPerConnection" value="200"></property>
 	<property name="createConnectionOnStartup" value="true"></property>
-	</bean>	 -->
+	</bean>	
 </beans>

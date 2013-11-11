@@ -9,10 +9,11 @@
 	
 	<bean id="jmsFactory"
 		class="org.apache.activemq.ActiveMQConnectionFactory">
-	<property name="brokerURL" value="tcp://localhost:61616"></property>
+	<property name="brokerURL" value="tcp://192.168.1.8:61616"></property>
 	<property name="maxThreadPoolSize" value="20"></property>
 	<property name="useAsyncSend" value="true"></property>
 	<property name="dispatchAsync" value="true"></property>
+
 	
 	</bean>
 	<bean id="jmsTemplate"
@@ -53,7 +54,6 @@
 	<property name="maxConnections" value="20"></property>
 	<property name="maximumActiveSessionPerConnection" value="200"></property>
 	<property name="createConnectionOnStartup" value="true"></property>
-	<property name="timeBetweenExpirationCheckMillis" value="10000"></property>
 	
 	</bean>
 	
