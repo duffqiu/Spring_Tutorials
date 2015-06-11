@@ -29,7 +29,7 @@ public class AppConsumer {
 
 	System.out.println("Start to get mail...");
 	long start = System.currentTimeMillis();
-	for (int i = 0; i < 10000; i++) {
+	for (int i = 0; i < 10; i++) {
 	    Mail mail = backOffice.receiveMail();
 	    //	    System.out.println("Receive " + i + ": " + mail);
 	    if (mail == null) {

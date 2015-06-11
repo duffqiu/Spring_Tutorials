@@ -9,11 +9,12 @@
 	
 	<bean id="jmsFactory"
 		class="org.apache.activemq.ActiveMQConnectionFactory">
-	<property name="brokerURL" value="tcp://localhost:61616"></property>
+	<property name="brokerURL" value="failover:(tcp://localhost:61616,tcp://localhost:62616,tcp://localhost:63616)"></property>
 	<property name="maxThreadPoolSize" value="20"></property>
 	<property name="useAsyncSend" value="true"></property>
 	<property name="dispatchAsync" value="true"></property>
-
+	<property name="userName" value="admin"></property>
+	<property name="password" value="admin"></property>
 	</bean>
 
 	<bean id="mailMessageConvert"
@@ -50,7 +51,7 @@
 		destroy-method="stop" init-method="start">
 	<property name="connectionFactory" ref="jmsFactory"></property>
 	<property name="maxConnections" value="20"></property>
-	<property name="maximumActiveSessionPerConnection" value="200"></property>
+	<property name="maximumActiveSessionPerConnection" value="100"></property>
 	<property name="createConnectionOnStartup" value="true"></property>
 	</bean>	
 </beans>

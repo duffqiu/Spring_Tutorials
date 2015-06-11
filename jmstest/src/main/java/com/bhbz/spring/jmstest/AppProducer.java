@@ -24,7 +24,7 @@ public class AppProducer {
 
 	System.out.println("start to create mail...");
 	long start = System.currentTimeMillis();
-	for (int i = 0; i < 10000; i++) {
+	for (int i = 0; i < 100000; i++) {
 	    frontDesk.sendMessage(new Mail("mailid:Xx", "China", 1000.5));
 	}
 
